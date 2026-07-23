@@ -164,6 +164,18 @@ class StroopExperiment:
             stimulus.correct_key
         )
 
+        if response.timeout:
+
+            accuracy = "TIMEOUT"
+
+        elif correct:
+
+            accuracy = "CORRECT"
+
+        else:
+
+             accuracy = "INCORRECT"
+
 
         # обратная связь
 
@@ -202,6 +214,15 @@ class StroopExperiment:
 
 
         # запись данных
+        
+        if response.timeout:
+            accuracy = "TIMEOUT"
+
+        elif correct:
+            accuracy = "CORRECT"
+
+        else:
+            accuracy = "INCORRECT"
 
         self.logger.log_trial(
             trial=trial_number,
@@ -210,11 +231,10 @@ class StroopExperiment:
             congruent=stimulus.congruent,
             correct_key=stimulus.correct_key,
             response=response.key,
-            correct=correct,
+            accuracy=accuracy,
             rt_ms=response.rt_ms,
             timeout=response.timeout,
-            remaining_time=
-                self.timer.formatted_remaining(),
+            remaining_time=self.timer.formatted_remaining(),
         )
 
 

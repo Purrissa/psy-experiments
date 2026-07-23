@@ -62,10 +62,11 @@ class ExperimentLogger:
                 "trial",
                 "word",
                 "ink_color",
+                "condition",
                 "congruent",
                 "correct_key",
                 "response",
-                "correct",
+                "accuracy",
                 "rt_ms",
                 "timeout",
                 "remaining_time",
@@ -74,6 +75,7 @@ class ExperimentLogger:
 
 
         self.writer.writeheader()
+
 
 
     def log_trial(
@@ -85,14 +87,34 @@ class ExperimentLogger:
         congruent: bool,
         correct_key: str,
         response: str | None,
-        correct: bool,
-        rt_ms: int,
+        rt_ms: int | None,
         timeout: bool,
         remaining_time: str,
+        accuracy: str | None = None,
+        correct: bool | None = None,
     ):
         """
         Записать одну пробу.
         """
+
+        if accuracy is None:
+
+            if timeout:
+                accuracy = "TIMEOUT"
+
+            elif correct:
+                accuracy = "CORRECT"
+
+            else:
+                accuracy = "INCORRECT"
+
+        condition = (
+            "CONGRUENT"
+            if congruent
+            else
+            "INCONGRUENT"
+        )
+
 
         self.writer.writerow(
             {
@@ -111,6 +133,9 @@ class ExperimentLogger:
                 "ink_color":
                     ink_color,
 
+                "condition":
+                    condition,
+
                 "congruent":
                     congruent,
 
@@ -120,8 +145,8 @@ class ExperimentLogger:
                 "response":
                     response,
 
-                "correct":
-                    correct,
+                "accuracy":
+                    accuracy,
 
                 "rt_ms":
                     rt_ms,
@@ -134,7 +159,9 @@ class ExperimentLogger:
             }
         )
 
+
         self.file.flush()
+
 
 
     def close(self):
