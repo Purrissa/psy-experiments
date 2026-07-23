@@ -6,9 +6,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "psy-experiments"
 version = "0.1.0"
-description = "Psychological experiments written in PsychoPy"
+description = "Psychological experiments with PsychoPy"
 requires-python = ">=3.11"
 
 
 [tool.setuptools.packages.find]
-where = ["."]
+include = [
+    "stroop*"
+]
