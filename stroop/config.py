@@ -6,6 +6,9 @@ config.py
 
 from pathlib import Path
 
+CONGRUENT_DURATION = 60
+
+CONGRUENT_ONLY = True
 
 # ========================================================
 # Основные параметры эксперимента

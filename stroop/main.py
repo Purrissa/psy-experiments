@@ -1,34 +1,50 @@
 """
 main.py
 
-Точка запуска эксперимента Струпа.
+Запуск эксперимента Струпа.
 """
 
 from .participant import collect_participant_info
 from .experiment import StroopExperiment
-
-from .config import (
-    EXPERIMENT_DURATION,
-)
-
+from .congruent_experiment import CongruentStroopExperiment
 
 
 def main():
 
-    # окно ввода информации об участнике
+    # сбор данных участника
 
-    participant = (
-        collect_participant_info()
+    participant = collect_participant_info()
+
+
+    print(
+        """
+Выберите эксперимент:
+
+1 — Полный тест Струпа (2 минуты)
+2 — Только конгруэнтные стимулы (1 минута)
+
+"""
     )
 
 
-    # запуск эксперимента
-
-    experiment = StroopExperiment(
-        participant=participant,
-        duration=EXPERIMENT_DURATION,
-        trials=100,
+    choice = input(
+        "Введите номер режима: "
     )
+
+
+    if choice == "2":
+
+        experiment = CongruentStroopExperiment(
+            participant=participant,
+            duration=60
+        )
+
+    else:
+
+        experiment = StroopExperiment(
+            participant=participant,
+            duration=120
+        )
 
 
     experiment.run()

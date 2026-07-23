@@ -160,3 +160,25 @@ class StimulusGenerator:
 
 
         return stimulus
+
+
+
+    def next_congruent(self) -> Stimulus:
+        """
+        Получить следующий только конгруэнтный стимул.
+        """
+
+        while self.index < len(self.trials):
+
+            stimulus = self.trials[self.index]
+
+            self.index += 1
+
+            if stimulus.congruent:
+
+                return stimulus
+
+
+        raise StopIteration(
+            "Все конгруэнтные стимулы использованы"
+        )
