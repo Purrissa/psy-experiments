@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Python virtual environment
+.venv/
+
+# PsychoPy data
+data/*.csv
+
+# Cache
+__pycache__/
+*.pyc
