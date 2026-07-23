@@ -1,0 +1,16 @@
+{
+    "experiment_name": "Stroop Task",
+    "experiment_version": "1.0.0",
+    "participant_id": "drhyd",
+    "age": "",
+    "gender": "",
+    "date": "2026-07-23T16:08:09.730948",
+    "duration_seconds": 120,
+    "trial_timeout_seconds": 5.0,
+    "number_of_trials": 100,
+    "fullscreen": true,
+    "window_size": [
+        1920,
+        1080
+    ]
+}

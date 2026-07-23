@@ -1,72 +1,42 @@
-"""
-Тесты генератора стимулов.
-"""
-
 from stroop.stimuli import StimulusGenerator
 
 
-def test_cycle_contains_16_unique_stimuli():
+def test_generator_returns_stimulus():
 
-    generator = StimulusGenerator()
-
-    stimuli = [
-        generator.next_stimulus()
-        for _ in range(16)
-    ]
-
-    assert len(stimuli) == 16
-
-    unique = {
-        (s.word, s.ink_color)
-        for s in stimuli
-    }
-
-    assert len(unique) == 16
-
-
-def test_congruency_counts():
-
-    generator = StimulusGenerator()
-
-    stimuli = [
-        generator.next_stimulus()
-        for _ in range(16)
-    ]
-
-    congruent = sum(
-        s.congruent
-        for s in stimuli
+    generator = StimulusGenerator(
+        total_trials=10
     )
 
-    incongruent = sum(
-        not s.congruent
-        for s in stimuli
+    stimulus = generator.next()
+
+    assert stimulus.word in [
+        "КРАСНЫЙ",
+        "ЗЕЛЕНЫЙ",
+        "СИНИЙ",
+        "БЕЛЫЙ",
+    ]
+
+
+def test_correct_key_exists():
+
+    generator = StimulusGenerator(
+        total_trials=10
     )
 
-    assert congruent == 4
-    assert incongruent == 12
+    stimulus = generator.next()
 
-
-def test_second_cycle_is_new():
-
-    generator = StimulusGenerator()
-
-    first = [
-        generator.next_stimulus()
-        for _ in range(16)
+    assert stimulus.correct_key in [
+        "1",
+        "2",
+        "3",
+        "4",
     ]
 
-    second = [
-        generator.next_stimulus()
-        for _ in range(16)
-    ]
 
-    assert len(first) == 16
-    assert len(second) == 16
+def test_generator_has_trials():
 
-    unique = {
-        (s.word, s.ink_color)
-        for s in second
-    }
+    generator = StimulusGenerator(
+        total_trials=20
+    )
 
-    assert len(unique) == 16
+    assert len(generator.trials) == 20

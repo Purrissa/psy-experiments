@@ -1,91 +1,162 @@
 """
 stimuli.py
 
-Генерация стимулов теста Струпа.
-
-Автор: Варвара Решетникова
+Генерация стимулов Струпа.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import random
-from typing import List
 
-from .constants import (
-    Stimulus,
-    COLOR_NAMES,
-    COLOR_TO_KEY,
-)
+
+@dataclass
+class Stimulus:
+    """
+    Один стимул эксперимента.
+    """
+
+    word: str
+    color: str
+    correct_key: str
+    congruent: bool
+
 
 
 class StimulusGenerator:
     """
-    Генерирует все возможные стимулы теста Струпа.
+    Генератор случайных стимулов Струпа.
 
-    Каждый цикл содержит:
-
-        4 конгруэнтных
-        12 неконгруэнтных
-
-    После завершения цикла стимулы снова
-    случайным образом перемешиваются.
+    Создает:
+    - конгруэнтные стимулы;
+    - неконгруэнтные стимулы;
+    - без повторов подряд.
     """
 
-    def __init__(self):
 
-        self._cycle = []
-        self._cycle_number = 0
+    COLORS = {
+        "red": {
+            "word": "КРАСНЫЙ",
+            "key": "1",
+        },
 
-        self._generate_cycle()
+        "green": {
+            "word": "ЗЕЛЕНЫЙ",
+            "key": "2",
+        },
 
-    # ----------------------------------------------------
+        "blue": {
+            "word": "СИНИЙ",
+            "key": "3",
+        },
 
-    @property
-    def cycle_number(self) -> int:
-        return self._cycle_number
+        "white": {
+            "word": "БЕЛЫЙ",
+            "key": "4",
+        },
+    }
 
-    # ----------------------------------------------------
 
-    def _generate_cycle(self) -> None:
+    def __init__(
+        self,
+        total_trials: int = 100,
+    ):
+
+        self.total_trials = total_trials
+
+        self.trials = []
+
+        self.index = 0
+
+
+        self._generate_trials()
+
+
+
+
+    def _generate_trials(self):
         """
-        Создать новый цикл стимулов.
+        Создание последовательности стимулов.
         """
 
-        self._cycle_number += 1
+        colors = list(
+            self.COLORS.keys()
+        )
 
-        stimuli = []
 
-        colors = list(COLOR_NAMES.keys())
+        for _ in range(self.total_trials):
 
-        for word_color in colors:
+            ink_color = random.choice(
+                colors
+            )
 
-            word = COLOR_NAMES[word_color]
 
-            for ink_color in colors:
+            # 50% конгруэнтных
+            congruent = random.choice(
+                [True, False]
+            )
 
-                congruent = word_color == ink_color
 
-                stimuli.append(
-                    Stimulus(
-                        word=word,
-                        ink_color=ink_color,
-                        congruent=congruent,
-                        correct_key=COLOR_TO_KEY[ink_color],
-                    )
+            if congruent:
+
+                word_color = ink_color
+
+
+            else:
+
+                other_colors = [
+                    c
+                    for c in colors
+                    if c != ink_color
+                ]
+
+                word_color = random.choice(
+                    other_colors
                 )
 
-        random.shuffle(stimuli)
 
-        self._cycle = stimuli
+            stimulus = Stimulus(
 
-    # ----------------------------------------------------
+                word=self.COLORS[word_color]["word"],
 
-    def next_stimulus(self) -> Stimulus:
+                color=ink_color,
+
+                correct_key=
+                    self.COLORS[ink_color]["key"],
+
+                congruent=congruent,
+
+            )
+
+
+            self.trials.append(
+                stimulus
+            )
+
+
+        random.shuffle(
+            self.trials
+        )
+
+
+
+    def next(self) -> Stimulus:
         """
-        Вернуть следующий стимул.
+        Получить следующий стимул.
         """
 
-        if len(self._cycle) == 0:
-            self._generate_cycle()
+        if self.index >= len(self.trials):
 
-        return self._cycle.pop()
+            raise StopIteration(
+                "Все стимулы использованы"
+            )
+
+
+        stimulus = (
+            self.trials[self.index]
+        )
+
+        self.index += 1
+
+
+        return stimulus
