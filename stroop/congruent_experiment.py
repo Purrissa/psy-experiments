@@ -35,12 +35,13 @@ class CongruentStroopExperiment:
 
         self.logger = ExperimentLogger(
             participant,
-            Path("data")
         )
 
 
 
     def run(self):
+
+        self.ui.show_instruction()
 
         self.timer.start()
 
@@ -68,7 +69,8 @@ class CongruentStroopExperiment:
             response = (
                 self.keyboard.wait_for_response(
                     ui=self.ui,
-                    experiment_timer=self.timer
+                    experiment_timer=self.timer,
+                    show_timer=False,
                 )
             )
 

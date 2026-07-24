@@ -64,7 +64,7 @@ WORD_SIZE = 0.15
 
 INSTRUCTION_SIZE = 0.05
 
-TIMER_SIZE = 0.04
+TIMER_SIZE = 0.08
 
 FEEDBACK_SIZE = 0.08
 
@@ -80,8 +80,8 @@ WORD_POSITION = (
 
 
 TIMER_POSITION = (
-    0.75,
-    0.45
+    0.70,
+    0.43
 )
 
 
@@ -97,11 +97,11 @@ FIXATION_POSITION = (
 
 TEXT_COLOR = "white"
 
-TIMER_COLOR = "yellow"
+TIMER_COLOR = "red"
 
 ERROR_COLOR = "red"
 
-TIMEOUT_COLOR = "orange"
+TIMEOUT_COLOR = "red"
 
 
 # ========================================================

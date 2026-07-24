@@ -7,6 +7,7 @@ logger.py
 from __future__ import annotations
 
 import csv
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -24,8 +25,19 @@ class ExperimentLogger:
     def __init__(
         self,
         participant: Participant,
-        folder: Path,
+        folder: Path | None = None,
     ):
+
+        if folder is None:
+
+             if getattr(sys, "frozen", False):
+                # запуск из exe
+                base_path = Path(sys.executable).parent
+             else:
+                # запуск из Python
+                base_path = Path(__file__).resolve().parent.parent
+
+             folder = base_path / "data"
 
         self.participant = participant
 

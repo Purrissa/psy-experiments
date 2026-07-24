@@ -22,6 +22,7 @@ class Participant:
     age: str
     gender: str
     date: str
+    mode: str = "Основной"
 
 
 def collect_participant_info() -> Participant:
@@ -33,7 +34,11 @@ def collect_participant_info() -> Participant:
     info = {
         "ID участника": "",
         "Возраст": "",
-        "Пол": "",
+        "Пол": ["Ж", "М", "Другое"],
+        "Режим теста": [
+            "Основной",
+            "Конгруэнтный",
+        ],
     }
 
     dialog = gui.DlgFromDict(
@@ -52,6 +57,7 @@ def collect_participant_info() -> Participant:
         participant_id=info["ID участника"],
         age=info["Возраст"],
         gender=info["Пол"],
+        mode=info["Режим теста"],
         date=datetime.now().isoformat()
     )
 

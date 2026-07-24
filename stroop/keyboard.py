@@ -50,6 +50,7 @@ class KeyboardHandler:
         self,
         ui=None,
         experiment_timer=None,
+        show_timer=True,
     ) -> Response:
         """
         Ожидание ответа участника.
@@ -108,8 +109,9 @@ class KeyboardHandler:
 
                 if experiment_timer is not None:
 
-                    ui.show_timer(
-                        experiment_timer.formatted_remaining()
+                    if show_timer:
+                        ui.show_timer(
+                            experiment_timer.formatted_remaining()
                     )
 
 

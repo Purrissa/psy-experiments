@@ -63,7 +63,6 @@ class StroopExperiment:
 
         self.logger = ExperimentLogger(
             participant,
-            Path("data")
         )
 
 
@@ -88,9 +87,7 @@ class StroopExperiment:
 
         if SHOW_INSTRUCTIONS:
 
-            self.ui.show_instruction(
-                INSTRUCTION_TEXT
-            )
+            self.ui.show_instruction()
 
 
         # теперь начинается экспериментальное время

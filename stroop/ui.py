@@ -136,7 +136,18 @@ class ExperimentWindow:
     def show_timer(
         self,
         value: str,
+        visible: bool = True,
     ):
+        """
+        Обновить таймер.
+        """
+
+        if not visible:
+            return
+
+        self.timer.text = value
+        self.timer.draw()
+        
         """
         Установить таймер.
         """
@@ -178,12 +189,14 @@ class ExperimentWindow:
 
         self.window.flip()
 
+    def close(self):
+        """
+        Закрыть окно PsychoPy.
+        """
 
+        self.window.close()
 
-    def show_instruction(
-        self,
-        text: str,
-    ):
+    def show_instruction(self):
         """
         Экран инструкции.
         """

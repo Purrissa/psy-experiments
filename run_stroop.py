@@ -1,17 +1,9 @@
-"""
-main.py
-
-Запуск эксперимента Струпа.
-"""
-
-from .participant import collect_participant_info
-from .experiment import StroopExperiment
-from .congruent_experiment import CongruentStroopExperiment
+from stroop.participant import collect_participant_info
+from stroop.experiment import StroopExperiment
+from stroop.congruent_experiment import CongruentStroopExperiment
 
 
 def main():
-
-    # сбор данных участника
 
     participant = collect_participant_info()
 
@@ -23,7 +15,5 @@ def main():
     experiment.run()
 
 
-
 if __name__ == "__main__":
-
     main()
