@@ -6,7 +6,7 @@ ui.py
 
 from __future__ import annotations
 
-from psychopy import visual, core, event
+from psychopy import visual, core, event, sound
 
 from .config import (
     FULLSCREEN,
@@ -79,6 +79,15 @@ class ExperimentWindow:
             pos=(0, 0),
         )
 
+        self.error_sound = sound.Sound(
+            value=1000,
+            secs=0.10,
+        )
+
+        self.timeout_sound = sound.Sound(
+            value=500,
+            secs=0.20,
+        )
 
         # состояние текущего кадра
 
@@ -174,6 +183,12 @@ class ExperimentWindow:
         self.feedback.draw()
 
         self.window.flip()
+
+        if text == "ОШИБКА":
+            self.error_sound.play()
+
+        elif text == "ВРЕМЯ ВЫШЛО":
+            self.timeout_sound.play()
 
         core.wait(duration)
 
